@@ -1,6 +1,6 @@
-\documentclass[semcabeco,showtrims,trimframe,11pt,conselho,spreadimages]{memoir}
+\documentclass[semcabeco,showtrims,11pt,conselho,spreadimages]{memoir}
 
-\usepackage[largepost]{hedraoptions} 
+\usepackage[SuperRoyal]{hedraoptions} 
 \usepackage[baruch]{hedrastyles}
 \usepackage[xetex,chicagofootnotes]{tipografia}
 \usepackage[standart,compontinhos]{toc}
@@ -16,18 +16,46 @@
 \usepackage{gitrevisioninfo}
 \usepackage{multicol}
 
+\usepackage{tocloft}
+
 \newcommand\starr{\textsuperscript{\tiny $\ast$}}
 
-\let\originalparagraph\paragraph
 \makeatletter
 \renewcommand\paragraph{\@startsection{paragraph}{4}{\z@}%
                                     {1ex \@plus.5ex \@minus.2ex}%
                                     {-1em}%
                                     {\normalfont\normalsize\bfseries}}
-\renewcommand\theparagraph{[\arabic{paragraph}]}
+\renewcommand\theparagraph{\arabic{paragraph}}
 \makeatother
 
+\makeatletter
 
+\newcommand*\l@chapterinfo{\@nodottedtocline{0}{0.0em}{1.0em}}
+
+\def\@nodottedtocline#1#2#3#4#5{%
+  \ifnum #1>\c@tocdepth \else
+    \vskip \z@ \@plus.2\p@
+    {\leftskip #2\relax \rightskip \@tocrmarg \parfillskip -\rightskip
+     \parindent #2\relax\@afterindenttrue
+     \interlinepenalty\@M
+     \leavevmode
+     \@tempdima #3\relax
+     \advance\leftskip \@tempdima \null\nobreak\hskip -\leftskip
+     {#4}\nobreak
+     \leaders\hbox{$\m@th
+        \mkern \@dotsep mu\hbox{\,}\mkern \@dotsep
+        mu$}\hfill
+     \nobreak
+     \hb@xt@\@pnumwidth{\hfil\normalfont \normalcolor }%
+     \par}%
+  \fi}
+
+\makeatother
+
+\def\chapterinfo#1{%
+    \addcontentsline{toc}{chapterinfo}{%
+    \noexpand\small\numberline{}#1 \smallskip}%
+}
 
 \setcounter{tocdepth}{0}     % amplitude da presença das partes no índice
 \setcounter{secnumdepth}{-2} % amplitude da numeração das partes
@@ -58,6 +86,14 @@
    %\hrule \@width 2in \kern 7.6\p@} % the \hrule is .4pt high
 \skip\footins=10mm\@plus3mm\@minus5mm
 \makeatother
+
+\usepackage{fontspec}
+
+\newfontfamily\Formular{Formular-Regular}[
+BoldFont = Formular-Bold.otf,
+ItalicFont = Formular-Italic.otf]
+%\newcommand{\Formular}[1]{#1}
+\newfontfamily\Brabo{FS Brabo Pro Regular}
 
 
 \begin{document}
